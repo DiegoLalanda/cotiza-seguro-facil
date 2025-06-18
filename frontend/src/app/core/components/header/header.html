@@ -1,0 +1,24 @@
+<header class="bg-white shadow-md sticky top-0 z-50">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo o Nombre de la App -->
+      <div class="flex-shrink-0">
+        <a routerLink="/" class="flex items-center gap-2 text-2xl font-bold text-blue-600">
+          <lucide-icon name="shield-check" class="h-8 w-8"></lucide-icon>
+          <span>CotizaSeguro</span>
+        </a>
+      </div>
+
+      <!-- Enlace a Login Admin -->
+      <div class="hidden md:block">
+        <div class="ml-4 flex items-center md:ml-6">
+          <a routerLink="/login" 
+             class="flex items-center gap-2 bg-gray-100 text-gray-700 hover:bg-gray-200 font-medium py-2 px-4 rounded-md transition duration-300">
+            <lucide-icon name="user-cog" size="16"></lucide-icon>
+            <span>Admin Login</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

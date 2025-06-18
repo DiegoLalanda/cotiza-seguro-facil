@@ -1,0 +1,196 @@
+<ngx-sonner-toaster [richColors]="true" />
+<main class="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div class="w-full max-w-2xl bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
+        <h1 class="text-3xl font-bold text-gray-800 text-center mb-2">Cotizá tu Seguro</h1>
+        <p class="text-center text-gray-500 mb-8">Completá los datos y te contactaremos a la brevedad.</p>
+
+        <!-- Indicador de Pasos -->
+        <div class="flex justify-center items-center mb-8">
+            <div class="flex items-center" [ngClass]="{'font-bold text-blue-600': step() === 1}">
+                <div class="rounded-full h-8 w-8 flex items-center justify-center"
+                    [ngClass]="step() === 1 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-600'">1</div>
+                <span class="ml-2">Vehículo</span>
+            </div>
+            <div class="flex-auto border-t-2 mx-4" [ngClass]="step() === 2 ? 'border-blue-600' : 'border-gray-200'">
+            </div>
+            <div class="flex items-center" [ngClass]="{'font-bold text-blue-600': step() === 2}">
+                <div class="rounded-full h-8 w-8 flex items-center justify-center"
+                    [ngClass]="step() === 2 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-600'">2</div>
+                <span class="ml-2">Contacto</span>
+            </div>
+        </div>
+
+        <form #quoteForm="ngForm" (ngSubmit)="submitForm(quoteForm)" novalidate>
+
+            <!-- PASO 1: DATOS DEL VEHÍCULO -->
+            @if (step() === 1) {
+            <div class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="marca" class="block text-sm font-medium text-gray-700 mb-1">Marca del
+                            Vehículo</label>
+                        <input type="text" id="marca" name="marca" placeholder="Chevrolet" [(ngModel)]="formData.vehiculo.marca"
+                            #marca="ngModel" required
+                            class="w-full px-3 py-2 border rounded-md transition focus:outline-none focus:ring-2"
+                            [ngClass]="{'border-red-500 focus:ring-red-500': marca.invalid && (marca.dirty || marca.touched), 'border-green-500 focus:ring-green-500': marca.valid && (marca.dirty || marca.touched), 'border-gray-300 focus:ring-blue-500': marca.pristine}">
+                        @if (marca.invalid && (marca.dirty || marca.touched)) {
+                        <div class="text-red-500 text-xs mt-1">La marca es requerida.</div>
+                        }
+                    </div>
+                    <div>
+                        <label for="anio" class="block text-sm font-medium text-gray-700 mb-1">Año de
+                            Fabricación</label>
+                        <input type="number" id="anio" name="anio" [(ngModel)]="formData.vehiculo.anio" #anio="ngModel"
+                            required [min]="currentYear - 70" [max]="currentYear"
+                            class="w-full px-3 py-2 border rounded-md transition focus:outline-none focus:ring-2"
+                            [ngClass]="{'border-red-500 focus:ring-red-500': anio.invalid && (anio.dirty || anio.touched), 'border-green-500 focus:ring-green-500': anio.valid && (anio.dirty || anio.touched), 'border-gray-300 focus:ring-blue-500': anio.pristine}">
+                        @if (anio.invalid && (anio.dirty || anio.touched)) {
+                        <div class="text-red-500 text-xs mt-1">El año es requerido.</div>
+                        }
+                    </div>
+                </div>
+                <div>
+                    <label for="modelo" class="block text-sm font-medium text-gray-700 mb-1">Modelo</label>
+                    <input type="text" id="modelo" name="modelo" placeholder="Onix 1.0 Plus LTZ L/21" [(ngModel)]="formData.vehiculo.modelo"
+                        #modelo="ngModel" required
+                        class="w-full px-3 py-2 border rounded-md transition focus:outline-none focus:ring-2"
+                        [ngClass]="{'border-red-500 focus:ring-red-500': modelo.invalid && (modelo.dirty || modelo.touched), 'border-green-500 focus:ring-green-500': modelo.valid && (modelo.dirty || modelo.touched), 'border-gray-300 focus:ring-blue-500': modelo.pristine}">
+                    @if (modelo.invalid && (modelo.dirty || modelo.touched)) {
+                    <div class="text-red-500 text-xs mt-1">El modelo es requerido.</div>
+                    }
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" id="gnc" name="gnc" [(ngModel)]="formData.vehiculo.tieneGNC"
+                        class="h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                    <label for="gnc" class="ml-2 block text-sm text-gray-900">¿Tiene equipo de GNC?</label>
+                </div>
+                <div class="flex justify-end pt-4">
+                    <button type="button" (click)="nextStep()"
+                        [disabled]="marca.invalid || anio.invalid || modelo.invalid"
+                        class="bg-blue-600 text-white font-bold py-2 px-6 rounded-md hover:bg-blue-700 transition duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2">
+                        Siguiente <lucide-icon name="chevron-right" size="16"></lucide-icon>
+                    </button>
+                </div>
+            </div>
+            }
+
+            <!-- PASO 2: DATOS PERSONALES (CON VALIDACIONES MEJORADAS) -->
+            @if (step() === 2) {
+            <div class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" [(ngModel)]="formData.cliente.nombre"
+                            #nombre="ngModel" required pattern="^[a-zA-Z\s]+$"
+                            class="w-full px-3 py-2 border rounded-md transition focus:outline-none focus:ring-2"
+                            [ngClass]="{'border-red-500 focus:ring-red-500': nombre.invalid && nombre.touched, 'border-green-500 focus:ring-green-500': nombre.valid && nombre.touched, 'border-gray-300 focus:ring-blue-500': nombre.pristine}">
+                        @if (nombre.errors?.['required'] && nombre.touched) {
+                        <div class="text-red-500 text-xs mt-1">El nombre es requerido.</div>
+                        }
+                        @if (nombre.errors?.['pattern'] && nombre.touched) {
+                        <div class="text-red-500 text-xs mt-1">Solo se permiten letras y espacios.</div>
+                        }
+                    </div>
+                    <div>
+                        <label for="apellido" class="block text-sm font-medium text-gray-700 mb-1">Apellido</label>
+                        <input type="text" id="apellido" name="apellido" [(ngModel)]="formData.cliente.apellido"
+                            #apellido="ngModel" required pattern="^[a-zA-Z\s]+$"
+                            class="w-full px-3 py-2 border rounded-md transition focus:outline-none focus:ring-2"
+                            [ngClass]="{'border-red-500 focus:ring-red-500': apellido.invalid && apellido.touched, 'border-green-500 focus:ring-green-500': apellido.valid && apellido.touched, 'border-gray-300 focus:ring-blue-500': apellido.pristine}">
+                        @if (apellido.errors?.['required'] && apellido.touched) {
+                        <div class="text-red-500 text-xs mt-1">El apellido es requerido.</div>
+                        }
+                        @if (apellido.errors?.['pattern'] && apellido.touched) {
+                        <div class="text-red-500 text-xs mt-1">Solo se permiten letras y espacios.</div>
+                        }
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" id="email" name="email" [(ngModel)]="formData.cliente.email"
+                            #email="ngModel" required email
+                            class="w-full px-3 py-2 border rounded-md transition focus:outline-none focus:ring-2"
+                            [ngClass]="{'border-red-500 focus:ring-red-500': email.invalid && email.touched, 'border-green-500 focus:ring-green-500': email.valid && email.touched, 'border-gray-300 focus:ring-blue-500': email.pristine}">
+                        @if (email.errors?.['required'] && email.touched) {
+                        <div class="text-red-500 text-xs mt-1">El email es requerido.</div>
+                        }
+                        @if (email.errors?.['email'] && email.touched) {
+                        <div class="text-red-500 text-xs mt-1">El formato del email no es válido.</div>
+                        }
+                    </div>
+                    <div>
+                        <label for="telefono" class="block text-sm font-medium text-gray-700 mb-1">Teléfono
+                            Móvil</label>
+                        <input type="tel" id="telefono" name="telefono" [(ngModel)]="formData.cliente.telefono"
+                            #telefono="ngModel" required pattern="^\+549\d{10}$" placeholder="+5491122334455"
+                            class="w-full px-3 py-2 border rounded-md transition focus:outline-none focus:ring-2"
+                            [ngClass]="{'border-red-500 focus:ring-red-500': telefono.invalid && telefono.touched, 'border-green-500 focus:ring-green-500': telefono.valid && telefono.touched, 'border-gray-300 focus:ring-blue-500': telefono.pristine}">
+                        <p class="text-xs text-gray-500 mt-1">Formato: +549 y número sin 0 ni 15.</p>
+                        @if (telefono.errors?.['required'] && telefono.touched) {
+                        <div class="text-red-500 text-xs mt-1">El teléfono es requerido.</div>
+                        }
+                        @if (telefono.errors?.['pattern'] && telefono.touched) {
+                        <div class="text-red-500 text-xs mt-1">El formato no es válido. Siga el ejemplo.</div>
+                        }
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="codigoPostal" class="block text-sm font-medium text-gray-700 mb-1">Código
+                            Postal</label>
+                        <input type="text" id="codigoPostal" name="codigoPostal"
+                            [(ngModel)]="formData.cliente.codigoPostal" #codigoPostal="ngModel" required
+                            pattern="^\d{4}$" placeholder="Ej: 3200"
+                            class="w-full px-3 py-2 border rounded-md transition focus:outline-none focus:ring-2"
+                            [ngClass]="{'border-red-500 focus:ring-red-500': codigoPostal.invalid && codigoPostal.touched, 'border-green-500 focus:ring-green-500': codigoPostal.valid && codigoPostal.touched, 'border-gray-300 focus:ring-blue-500': codigoPostal.pristine}">
+                        @if (codigoPostal.errors?.['required'] && codigoPostal.touched) {
+                        <div class="text-red-500 text-xs mt-1">El código postal es requerido.</div>
+                        }
+                        @if (codigoPostal.errors?.['pattern'] && codigoPostal.touched) {
+                        <div class="text-red-500 text-xs mt-1">Debe contener 4 dígitos.</div>
+                        }
+                    </div>
+                    <div>
+                        <label for="dni" class="block text-sm font-medium text-gray-700 mb-1">DNI (sin puntos)</label>
+                        <input type="text" id="dni" name="dni" [(ngModel)]="formData.cliente.dni" #dni="ngModel"
+                            required pattern="^\d{7,8}$" placeholder="Ej: 12345678"
+                            class="w-full px-3 py-2 border rounded-md transition focus:outline-none focus:ring-2"
+                            [ngClass]="{'border-red-500 focus:ring-red-500': dni.invalid && dni.touched, 'border-green-500 focus:ring-green-500': dni.valid && dni.touched, 'border-gray-300 focus:ring-blue-500': dni.pristine}">
+                        @if (dni.errors?.['required'] && dni.touched) {
+                        <div class="text-red-500 text-xs mt-1">El DNI es requerido.</div>
+                        }
+                        @if (dni.errors?.['pattern'] && dni.touched) {
+                        <div class="text-red-500 text-xs mt-1">Debe contener 7 u 8 dígitos, sin puntos.</div>
+                        }
+                    </div>
+                </div>
+                <div class="flex justify-between pt-4">
+                    <button type="button" (click)="prevStep()"
+                        class="bg-gray-200 text-gray-800 font-bold py-2 px-6 rounded-md hover:bg-gray-300 transition duration-300 flex items-center gap-2">
+                        <lucide-icon name="chevron-left" size="16"></lucide-icon> Atrás
+                    </button>
+                    <button type="submit" [disabled]="quoteForm.invalid || isLoading()"
+                        class="bg-green-600 text-white font-bold py-2 px-6 rounded-md hover:bg-green-700 transition duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2">
+                        @if (!isLoading()) {
+                        <span>Enviar Solicitud</span>
+                        } @else {
+                        <span class="flex items-center gap-2">
+                            <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                    stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                </path>
+                            </svg>
+                            Enviando...
+                        </span>
+                        }
+                    </button>
+                </div>
+            </div>
+            }
+        </form>
+    </div>
+</main>

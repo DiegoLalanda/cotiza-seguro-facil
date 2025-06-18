@@ -1,0 +1,13 @@
+<!-- El toaster principal puede vivir aquí para estar disponible en toda la app -->
+<ngx-sonner-toaster [richColors]="true" position="top-right" />
+
+<div class="flex flex-col min-h-screen">
+  <app-header></app-header>
+  
+  <!-- El contenido principal de la página se inyecta aquí -->
+  <main class="flex-grow bg-gray-50">
+    <router-outlet></router-outlet>
+  </main>
+  
+  <app-footer></app-footer>
+</div>
