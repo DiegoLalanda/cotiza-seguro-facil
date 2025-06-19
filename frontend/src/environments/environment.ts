@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    apiUrl: 'http://localhost:3000' // O la URL de tu backend
+    apiUrl: 'https://cotiza-seguro-facil.onrender.com' // O la URL de tu backend
 };

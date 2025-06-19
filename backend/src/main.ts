@@ -10,7 +10,7 @@ async function bootstrap() {
 
   // CORS
   app.enableCors({
-    origin: ['http://localhost:4200', 'https://tu-frontend-en-render.onrender.com'], // Añade la URL de tu frontend en Render
+    origin: ['http://localhost:4200', 'https://cotiza-seguro-facil-frontend.onrender.com'], // Añade la URL de tu frontend en Render
     credentials: true, // Importante para que las cookies se envíen
   });
 

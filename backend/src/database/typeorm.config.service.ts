@@ -41,7 +41,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       password: password,
       database: database, // Nombre de la base de datos
       entities: [Vehiculo, Cliente, Admin],
-      synchronize: !isProduction,
+      synchronize: true,
       ssl: isProduction ? { rejectUnauthorized: false } : false,
       logging: !isProduction,
       // logger: !isProduction ? 'advanced-console' : undefined, // Opcional
