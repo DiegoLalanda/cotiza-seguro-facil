@@ -17,7 +17,7 @@ export class AuthService {
     private adminRepository: Repository<Admin>,
     private jwtService: JwtService,
     private configService: ConfigService,
-  ) {}
+  ) { }
 
   async validateAdmin(username: string, pass: string): Promise<AdminProfile | null> {
     const admin = await this.adminRepository.findOne({ where: { username } });
@@ -39,14 +39,14 @@ export class AuthService {
     const jwtExpiresIn = this.configService.get<string>('app.jwtExpiresIn');
 
     if (!jwtSecret || !jwtExpiresIn) {
-        console.error('JWT_SECRET o JWT_EXPIRES_IN no están configurados');
-        throw new Error('Configuración de JWT incompleta para login');
+      console.error('JWT_SECRET o JWT_EXPIRES_IN no están configurados');
+      throw new Error('Configuración de JWT incompleta para login');
     }
 
     return {
       access_token: this.jwtService.sign(payload, {
-          secret: jwtSecret,
-          expiresIn: jwtExpiresIn
+        secret: jwtSecret,
+        expiresIn: jwtExpiresIn
       }),
       // Devolvemos solo los datos necesarios del admin, no la instancia completa
       admin: { id: adminProfile.id, username: adminProfile.username, email: adminProfile.email }
@@ -54,15 +54,27 @@ export class AuthService {
   }
 
   async seedAdmin() {
-    const existingAdmin = await this.adminRepository.findOne({ where: { username: 'adminCotizador' } });
+    // Leemos las credenciales desde la configuración
+    const adminUser = this.configService.get<string>('ADMIN_USERNAME');
+    const adminPass = this.configService.get<string>('ADMIN_PASSWORD');
+    const adminEmail = this.configService.get<string>('ADMIN_EMAIL');
+
+    // Un chequeo de seguridad para asegurar que las variables existen
+    if (!adminUser || !adminPass || !adminEmail) {
+      console.warn('ADMIN_USERNAME, ADMIN_PASSWORD, or ADMIN_EMAIL not found in .env, skipping admin seed.');
+      return;
+    }
+
+    const existingAdmin = await this.adminRepository.findOne({ where: { username: adminUser } });
+
     if (!existingAdmin) {
       const admin = this.adminRepository.create({
-        username: 'adminCotizador',
-        password: 'cotizaOnline000!', // Será hasheado por el @BeforeInsert
-        email: 'lala.dev.tech@gmail.com',
+        username: adminUser,
+        password: adminPass, // La contraseña se leerá del .env y será hasheada por el @BeforeInsert
+        email: adminEmail,
       });
       await this.adminRepository.save(admin);
-      console.log('Admin user seeded.');
+      console.log(`Admin user "${adminUser}" seeded successfully.`);
     }
   }
 }
