@@ -11,7 +11,7 @@ export const routes: Routes = [
       {
         path: '', // Ruta raíz (formulario)
         loadComponent: () => import('./pages/quote-form/quote-form').then(c => c.QuoteFormComponent),
-        title: 'Cotizar Seguro'
+        title: 'Tu Seguro Online'
       },
       {
         path: 'login',
@@ -26,7 +26,7 @@ export const routes: Routes = [
     path: 'admin/dashboard',
     loadComponent: () => import('./pages/dashboard/dashboard').then(c => c.DashboardComponent),
     canActivate: [authGuard],
-    title: 'Dashboard de Leads'
+    title: 'Dashboard'
   },
   // Redirección por defecto
   { path: '**', redirectTo: '', pathMatch: 'full' }

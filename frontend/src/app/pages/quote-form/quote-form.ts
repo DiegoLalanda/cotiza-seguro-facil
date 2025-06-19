@@ -11,7 +11,7 @@ import { LeadsService } from '../../core/services/leads';
 @Component({
   selector: 'app-quote-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgxSonnerToaster, LucideAngularModule],
+  imports: [CommonModule, FormsModule, LucideAngularModule],
   templateUrl: './quote-form.html',
 })
 export class QuoteFormComponent {

@@ -1,11 +1,18 @@
-<header class="bg-white shadow-md sticky top-0 z-50">
+<!--
+  MEJORAS:
+  - Borde inferior sutil para separar el header del contenido.
+  - El color del logo ahora usa el azul corporativo exacto de la imagen.
+  - El botón "Admin Login" tiene un estilo más limpio y un efecto hover que coincide con la marca.
+  - Añadidas transiciones suaves (transition-colors) para una mejor experiencia.
+-->
+<header class="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-200/80">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
       <!-- Logo o Nombre de la App -->
       <div class="flex-shrink-0">
-        <a routerLink="/" class="flex items-center gap-2 text-2xl font-bold text-blue-600">
-          <lucide-icon name="shield-check" class="h-8 w-8"></lucide-icon>
-          <span>CotizaSeguro</span>
+        <a routerLink="/" class="flex items-center gap-2 text-2xl font-bold text-[#0B4F8C]">
+          <!-- Consejo: Usa un SVG para el logo para una calidad perfecta en todas las pantallas -->
+          <img src="tuseguro-online-logo.png" alt="logo-tuseguro" class="h-8 w-auto">
         </a>
       </div>
 
@@ -13,7 +20,7 @@
       <div class="hidden md:block">
         <div class="ml-4 flex items-center md:ml-6">
           <a routerLink="/login" 
-             class="flex items-center gap-2 bg-gray-100 text-gray-700 hover:bg-gray-200 font-medium py-2 px-4 rounded-md transition duration-300">
+             class="flex items-center gap-2 text-[#0B4F8C] hover:bg-[#0B4F8C]/10 font-medium py-2 px-4 rounded-lg transition-colors duration-300">
             <lucide-icon name="user-cog" size="16"></lucide-icon>
             <span>Admin Login</span>
           </a>

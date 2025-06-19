@@ -1,23 +1,34 @@
-<footer class="bg-gray-800 text-gray-300">
+<!--
+  MEJORAS:
+  - El fondo ahora es el azul corporativo (#0B4F8C), unificando la identidad visual.
+  - Los textos "CotizaSeguro Fácil" se actualizaron a "Tuseguro Online" para ser consistentes.
+  - Los enlaces (email y redes sociales) usan el color verde (#65B83A) en el hover como un toque de acento.
+  - Se han añadido transiciones para que el cambio de color sea suave.
+-->
+<footer class="bg-[#0B4F8C] text-gray-300">
   <div class="container mx-auto py-8 px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <!-- Info de la Empresa -->
       <div>
-        <h3 class="text-lg font-semibold text-white mb-2">CotizaSeguro Fácil</h3>
+        <h3 class="text-lg font-semibold text-white mb-2">Tuseguro Online</h3>
         <p class="text-sm">Tu cotizador de seguros online de confianza. Rápido, fácil y seguro.</p>
       </div>
-      
+
       <!-- Contacto -->
       <div>
         <h3 class="text-lg font-semibold text-white mb-2">Contacto</h3>
         <ul class="space-y-2 text-sm">
           <li class="flex items-center gap-2">
             <lucide-icon name="mail" size="16"></lucide-icon>
-            <a href="mailto:contacto@cotizaseguro.com" class="hover:text-white"><p>contacto.com</p></a>
+            <!-- CORRECCIÓN AQUÍ: Cambiado el email en el href y usado @ para el texto visible -->
+            <a href="mailto:sebastianbusttiproductor@gmail.com"
+              class="hover:text-[#65B83A] transition-colors duration-300">
+              <p>sebastianbusttiproductor&#64;gmail.com</p>
+            </a>
           </li>
           <li class="flex items-center gap-2">
             <lucide-icon name="phone" size="16"></lucide-icon>
-            <span>+54 9 11 1234-5678</span>
+            <span>+54 9 345 409-6134</span>
           </li>
         </ul>
       </div>
@@ -26,18 +37,20 @@
       <div>
         <h3 class="text-lg font-semibold text-white mb-2">Seguinos</h3>
         <div class="flex space-x-4">
-          <a href="#" target="_blank" class="text-gray-400 hover:text-white">
-            <lucide-icon name="linkedin" size="24"></lucide-icon>
+          <a href="https://www.instagram.com/sebastianbustti/" target="_blank" class="text-gray-400 hover:text-[#65B83A] transition-colors duration-300">
+            <lucide-icon name="instagram" size="24"></lucide-icon>
           </a>
-          <!-- Puedes añadir más redes aquí -->
+          <a href="" target="_blank" class="text-gray-400 hover:text-[#65B83A] transition-colors duration-300">
+            <lucide-icon name="phone" size="24"></lucide-icon>
+          </a>
         </div>
       </div>
     </div>
-    
+
     <!-- Barra de Copyright -->
-    <div class="mt-8 pt-8 border-t border-gray-700 text-center text-sm">
-      <p>© {{ currentYear }} CotizaSeguro Fácil. Todos los derechos reservados.</p>
-      <p class="mt-1">Desarrollado con ❤️ por tu nombre/empresa.</p>
+    <div class="mt-8 pt-8 border-t border-white/20 text-center text-sm">
+      <p>© {{ currentYear }} Tuseguro Online. Todos los derechos reservados.</p>
+      <p class="mt-1">Desarrollado con ❤️ por <a href="https://www.instagram.com/lala.dev.tech/" class="text-gray-400 hover:text-[#65B83A] transition-colors duration-300">Lala.Dev</a></p>
     </div>
   </div>
 </footer>

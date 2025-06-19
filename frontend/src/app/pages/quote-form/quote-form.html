@@ -1,108 +1,108 @@
-<ngx-sonner-toaster [richColors]="true" />
-<main class="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-    <div class="w-full max-w-2xl bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
-        <h1 class="text-3xl font-bold text-gray-800 text-center mb-2">Cotizá tu Seguro</h1>
-        <p class="text-center text-gray-500 mb-8">Completá los datos y te contactaremos a la brevedad.</p>
+<main class="min-h-screen bg-[#f0f7f8] flex items-center justify-center p-4 animate-fade-in-up">
+    <!-- Usamos una animación personalizada simple. Para esto, añade a tu CSS global:
+      @keyframes fade-in-up { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
+      .animate-fade-in-up { animation: fade-in-up 0.6s ease-in-out; }
+    -->
+    <div class="w-full max-w-2xl bg-white p-8 rounded-2xl shadow-xl shadow-blue-900/10 border border-gray-200/80">
+        <h1 class="text-3xl font-bold text-[#0B4F8C] text-center mb-2">Cotizá tu Seguro</h1>
+        <p class="text-center text-gray-600 mb-8">Completá los datos y te contactaremos a la brevedad.</p>
 
-        <!-- Indicador de Pasos -->
+        <!-- Indicador de Pasos Mejorado -->
         <div class="flex justify-center items-center mb-8">
-            <div class="flex items-center" [ngClass]="{'font-bold text-blue-600': step() === 1}">
-                <div class="rounded-full h-8 w-8 flex items-center justify-center"
-                    [ngClass]="step() === 1 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-600'">1</div>
-                <span class="ml-2">Vehículo</span>
+            <div class="flex items-center transition-colors duration-500"
+                [ngClass]="{'font-bold text-[#0B4F8C]': step() === 1}">
+                <div class="rounded-full h-8 w-8 flex items-center justify-center transition-all duration-500"
+                    [ngClass]="step() >= 1 ? 'bg-[#0B4F8C] text-white' : 'bg-gray-200 text-gray-600'">1</div>
+                <span class="ml-2 hidden sm:inline">Vehículo</span>
             </div>
-            <div class="flex-auto border-t-2 mx-4" [ngClass]="step() === 2 ? 'border-blue-600' : 'border-gray-200'">
+            <div class="flex-auto border-t-2 mx-4 transition-all duration-500"
+                [ngClass]="step() === 2 ? 'border-[#0B4F8C]' : 'border-gray-200'">
             </div>
-            <div class="flex items-center" [ngClass]="{'font-bold text-blue-600': step() === 2}">
-                <div class="rounded-full h-8 w-8 flex items-center justify-center"
-                    [ngClass]="step() === 2 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-600'">2</div>
-                <span class="ml-2">Contacto</span>
+            <div class="flex items-center transition-colors duration-500"
+                [ngClass]="{'font-bold text-[#0B4F8C]': step() === 2}">
+                <div class="rounded-full h-8 w-8 flex items-center justify-center transition-all duration-500"
+                    [ngClass]="step() === 2 ? 'bg-[#0B4F8C] text-white' : 'bg-gray-200 text-gray-600'">2</div>
+                <span class="ml-2 hidden sm:inline">Contacto</span>
             </div>
         </div>
 
         <form #quoteForm="ngForm" (ngSubmit)="submitForm(quoteForm)" novalidate>
 
-            <!-- PASO 1: DATOS DEL VEHÍCULO -->
+            <!-- PASO 1: Con animación de entrada -->
             @if (step() === 1) {
-            <div class="space-y-6">
+            <div class="space-y-6 animate-fade-in"> <!-- Animación de entrada -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label for="marca" class="block text-sm font-medium text-gray-700 mb-1">Marca del
-                            Vehículo</label>
-                        <input type="text" id="marca" name="marca" placeholder="Chevrolet" [(ngModel)]="formData.vehiculo.marca"
-                            #marca="ngModel" required
-                            class="w-full px-3 py-2 border rounded-md transition focus:outline-none focus:ring-2"
-                            [ngClass]="{'border-red-500 focus:ring-red-500': marca.invalid && (marca.dirty || marca.touched), 'border-green-500 focus:ring-green-500': marca.valid && (marca.dirty || marca.touched), 'border-gray-300 focus:ring-blue-500': marca.pristine}">
-                        @if (marca.invalid && (marca.dirty || marca.touched)) {
+                        <label for="marca" class="block text-sm font-medium text-gray-700 mb-1">Marca</label>
+                        <input type="text" id="marca" name="marca" placeholder="Chevrolet"
+                            [(ngModel)]="formData.vehiculo.marca" #marca="ngModel" required
+                            class="w-full px-3 py-2 border rounded-md transition duration-300 focus:outline-none focus:ring-2"
+                            [ngClass]="{'border-red-500 focus:ring-red-500': marca.invalid && marca.touched, 'border-[#65B83A] focus:ring-[#65B83A]': marca.valid && marca.touched, 'border-gray-300 focus:ring-[#0B4F8C]': marca.pristine}">
+                        @if (marca.invalid && marca.touched) {
                         <div class="text-red-500 text-xs mt-1">La marca es requerida.</div>
                         }
                     </div>
                     <div>
-                        <label for="anio" class="block text-sm font-medium text-gray-700 mb-1">Año de
-                            Fabricación</label>
+                        <label for="anio" class="block text-sm font-medium text-gray-700 mb-1">Año</label>
                         <input type="number" id="anio" name="anio" [(ngModel)]="formData.vehiculo.anio" #anio="ngModel"
                             required [min]="currentYear - 70" [max]="currentYear"
-                            class="w-full px-3 py-2 border rounded-md transition focus:outline-none focus:ring-2"
-                            [ngClass]="{'border-red-500 focus:ring-red-500': anio.invalid && (anio.dirty || anio.touched), 'border-green-500 focus:ring-green-500': anio.valid && (anio.dirty || anio.touched), 'border-gray-300 focus:ring-blue-500': anio.pristine}">
-                        @if (anio.invalid && (anio.dirty || anio.touched)) {
+                            class="w-full px-3 py-2 border rounded-md transition duration-300 focus:outline-none focus:ring-2"
+                            [ngClass]="{'border-red-500 focus:ring-red-500': anio.invalid && anio.touched, 'border-[#65B83A] focus:ring-[#65B83A]': anio.valid && anio.touched, 'border-gray-300 focus:ring-[#0B4F8C]': anio.pristine}">
+                        @if (anio.invalid && anio.touched) {
                         <div class="text-red-500 text-xs mt-1">El año es requerido.</div>
                         }
                     </div>
                 </div>
                 <div>
                     <label for="modelo" class="block text-sm font-medium text-gray-700 mb-1">Modelo</label>
-                    <input type="text" id="modelo" name="modelo" placeholder="Onix 1.0 Plus LTZ L/21" [(ngModel)]="formData.vehiculo.modelo"
-                        #modelo="ngModel" required
-                        class="w-full px-3 py-2 border rounded-md transition focus:outline-none focus:ring-2"
-                        [ngClass]="{'border-red-500 focus:ring-red-500': modelo.invalid && (modelo.dirty || modelo.touched), 'border-green-500 focus:ring-green-500': modelo.valid && (modelo.dirty || modelo.touched), 'border-gray-300 focus:ring-blue-500': modelo.pristine}">
-                    @if (modelo.invalid && (modelo.dirty || modelo.touched)) {
+                    <input type="text" id="modelo" name="modelo" placeholder="Onix 1.0 Plus LTZ L/21"
+                        [(ngModel)]="formData.vehiculo.modelo" #modelo="ngModel" required
+                        class="w-full px-3 py-2 border rounded-md transition duration-300 focus:outline-none focus:ring-2"
+                        [ngClass]="{'border-red-500 focus:ring-red-500': modelo.invalid && modelo.touched, 'border-[#65B83A] focus:ring-[#65B83A]': modelo.valid && modelo.touched, 'border-gray-300 focus:ring-[#0B4F8C]': modelo.pristine}">
+                    @if (modelo.invalid && modelo.touched) {
                     <div class="text-red-500 text-xs mt-1">El modelo es requerido.</div>
                     }
                 </div>
-                <div class="flex items-center">
+                <div class="flex items-center pt-2">
                     <input type="checkbox" id="gnc" name="gnc" [(ngModel)]="formData.vehiculo.tieneGNC"
-                        class="h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-                    <label for="gnc" class="ml-2 block text-sm text-gray-900">¿Tiene equipo de GNC?</label>
+                        class="h-5 w-5 text-[#0B4F8C] border-gray-300 rounded focus:ring-[#0B4F8C] focus:ring-offset-2">
+                    <label for="gnc" class="ml-3 block text-sm text-gray-900">¿Tiene equipo de GNC?</label>
                 </div>
                 <div class="flex justify-end pt-4">
                     <button type="button" (click)="nextStep()"
                         [disabled]="marca.invalid || anio.invalid || modelo.invalid"
-                        class="bg-blue-600 text-white font-bold py-2 px-6 rounded-md hover:bg-blue-700 transition duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2">
-                        Siguiente <lucide-icon name="chevron-right" size="16"></lucide-icon>
+                        class="bg-[#0B4F8C] text-white font-bold py-2 px-6 rounded-lg hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0B4F8C] disabled:bg-gray-400 disabled:shadow-none disabled:scale-100 disabled:cursor-not-allowed flex items-center gap-2">
+                        Siguiente <lucide-icon name="arrow-right" size="16"></lucide-icon>
                     </button>
                 </div>
             </div>
             }
 
-            <!-- PASO 2: DATOS PERSONALES (CON VALIDACIONES MEJORADAS) -->
+            <!-- PASO 2: Con animación de entrada -->
             @if (step() === 2) {
-            <div class="space-y-6">
+            <div class="space-y-6 animate-fade-in"> <!-- Animación de entrada -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
                         <input type="text" id="nombre" name="nombre" [(ngModel)]="formData.cliente.nombre"
                             #nombre="ngModel" required pattern="^[a-zA-Z\s]+$"
-                            class="w-full px-3 py-2 border rounded-md transition focus:outline-none focus:ring-2"
-                            [ngClass]="{'border-red-500 focus:ring-red-500': nombre.invalid && nombre.touched, 'border-green-500 focus:ring-green-500': nombre.valid && nombre.touched, 'border-gray-300 focus:ring-blue-500': nombre.pristine}">
-                        @if (nombre.errors?.['required'] && nombre.touched) {
-                        <div class="text-red-500 text-xs mt-1">El nombre es requerido.</div>
-                        }
-                        @if (nombre.errors?.['pattern'] && nombre.touched) {
-                        <div class="text-red-500 text-xs mt-1">Solo se permiten letras y espacios.</div>
-                        }
+                            class="w-full px-3 py-2 border rounded-md transition duration-300 focus:outline-none focus:ring-2"
+                            [ngClass]="{'border-red-500 focus:ring-red-500': nombre.invalid && nombre.touched, 'border-[#65B83A] focus:ring-[#65B83A]': nombre.valid && nombre.touched, 'border-gray-300 focus:ring-[#0B4F8C]': nombre.pristine}">
+                        @if (nombre.errors?.['required'] && nombre.touched) { <div class="text-red-500 text-xs mt-1">El
+                            nombre es requerido.</div> }
+                        @if (nombre.errors?.['pattern'] && nombre.touched) { <div class="text-red-500 text-xs mt-1">Solo
+                            se permiten letras.</div> }
                     </div>
                     <div>
                         <label for="apellido" class="block text-sm font-medium text-gray-700 mb-1">Apellido</label>
                         <input type="text" id="apellido" name="apellido" [(ngModel)]="formData.cliente.apellido"
                             #apellido="ngModel" required pattern="^[a-zA-Z\s]+$"
-                            class="w-full px-3 py-2 border rounded-md transition focus:outline-none focus:ring-2"
-                            [ngClass]="{'border-red-500 focus:ring-red-500': apellido.invalid && apellido.touched, 'border-green-500 focus:ring-green-500': apellido.valid && apellido.touched, 'border-gray-300 focus:ring-blue-500': apellido.pristine}">
-                        @if (apellido.errors?.['required'] && apellido.touched) {
-                        <div class="text-red-500 text-xs mt-1">El apellido es requerido.</div>
-                        }
-                        @if (apellido.errors?.['pattern'] && apellido.touched) {
-                        <div class="text-red-500 text-xs mt-1">Solo se permiten letras y espacios.</div>
-                        }
+                            class="w-full px-3 py-2 border rounded-md transition duration-300 focus:outline-none focus:ring-2"
+                            [ngClass]="{'border-red-500 focus:ring-red-500': apellido.invalid && apellido.touched, 'border-[#65B83A] focus:ring-[#65B83A]': apellido.valid && apellido.touched, 'border-gray-300 focus:ring-[#0B4F8C]': apellido.pristine}">
+                        @if (apellido.errors?.['required'] && apellido.touched) { <div
+                            class="text-red-500 text-xs mt-1">El apellido es requerido.</div> }
+                        @if (apellido.errors?.['pattern'] && apellido.touched) { <div class="text-red-500 text-xs mt-1">
+                            Solo se permiten letras.</div> }
                     </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -167,13 +167,14 @@
                 </div>
                 <div class="flex justify-between pt-4">
                     <button type="button" (click)="prevStep()"
-                        class="bg-gray-200 text-gray-800 font-bold py-2 px-6 rounded-md hover:bg-gray-300 transition duration-300 flex items-center gap-2">
-                        <lucide-icon name="chevron-left" size="16"></lucide-icon> Atrás
+                        class="bg-gray-200 text-gray-800 font-bold py-2 px-6 rounded-lg hover:bg-gray-300 transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
+                        <lucide-icon name="arrow-left" size="16"></lucide-icon> Atrás
                     </button>
                     <button type="submit" [disabled]="quoteForm.invalid || isLoading()"
-                        class="bg-green-600 text-white font-bold py-2 px-6 rounded-md hover:bg-green-700 transition duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2">
+                        class="bg-[#65B83A] text-white font-bold py-2 px-6 rounded-lg hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#65B83A] disabled:bg-gray-400 disabled:shadow-none disabled:scale-100 disabled:cursor-not-allowed flex items-center gap-2">
                         @if (!isLoading()) {
                         <span>Enviar Solicitud</span>
+                        <lucide-icon name="send" size="16"></lucide-icon>
                         } @else {
                         <span class="flex items-center gap-2">
                             <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
