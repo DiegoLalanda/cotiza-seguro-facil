@@ -41,10 +41,9 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       password: password,
       database: database, // Nombre de la base de datos
       entities: [Vehiculo, Cliente, Admin],
-      synchronize: true, // Lo has puesto directamente en true. Para desarrollo está bien.
-                        // Recuerda que para producción deberías usar: !isProduction
+      synchronize: !isProduction,
       ssl: isProduction ? { rejectUnauthorized: false } : false,
-      logging: !isProduction ? 'all' : ['error'],
+      logging: !isProduction,
       // logger: !isProduction ? 'advanced-console' : undefined, // Opcional
     };
   }
