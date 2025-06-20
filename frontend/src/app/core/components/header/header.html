@@ -1,21 +1,12 @@
-<!--
-  MEJORAS:
-  - Borde inferior sutil para separar el header del contenido.
-  - El color del logo ahora usa el azul corporativo exacto de la imagen.
-  - El botón "Admin Login" tiene un estilo más limpio y un efecto hover que coincide con la marca.
-  - Añadidas transiciones suaves (transition-colors) para una mejor experiencia.
--->
 <header class="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-200/80">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
       <!-- Logo o Nombre de la App -->
       <div class="flex-shrink-0">
         <a routerLink="/" class="flex items-center gap-2 text-2xl font-bold text-[#0B4F8C]">
-          <!-- Consejo: Usa un SVG para el logo para una calidad perfecta en todas las pantallas -->
           <img src="tuseguro-online-logo.png" alt="logo-tuseguro" class="h-8 w-auto">
         </a>
       </div>
-
       <!-- Enlace a Login Admin -->
       <div class="hidden md:block">
         <div class="ml-4 flex items-center md:ml-6">

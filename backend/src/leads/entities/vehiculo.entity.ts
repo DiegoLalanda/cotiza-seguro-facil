@@ -1,5 +1,3 @@
-// backend/src/leads/entities/vehiculo.entity.ts
-
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { Cliente } from './cliente.entity';
 
@@ -20,13 +18,8 @@ export class Vehiculo {
   @Column({ type: 'boolean', default: false })
   tieneGNC: boolean;
 
-  // CAMBIO: Eliminamos la relación OneToOne con Cliente.
-  // @OneToOne(() => Cliente, cliente => cliente.vehiculo)
-  // cliente: Cliente;
-
-  // CAMBIO: Agregamos una relación ManyToOne. Muchos vehículos pueden pertenecer a un cliente.
   @ManyToOne(() => Cliente, cliente => cliente.vehiculos, { onDelete: 'CASCADE', nullable: false })
-  @JoinColumn({ name: 'clienteId' }) // Esto creará la columna 'clienteId' en la tabla de vehículos
+  @JoinColumn({ name: 'clienteId' })
   cliente: Cliente;
 
   @CreateDateColumn({ type: 'timestamp with time zone', default: () => 'CURRENT_TIMESTAMP' })

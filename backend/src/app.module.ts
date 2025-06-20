@@ -1,9 +1,4 @@
-// src/app.module.ts
-
-// 1. Importaciones necesarias para los middlewares
 import { Module, OnModuleInit, NestModule, MiddlewareConsumer } from '@nestjs/common'; 
-
-// Tus imports existentes
 import { ConfigModule } from '@nestjs/config';
 import { LeadsModule } from './leads/leads.module';
 import { AdminModule } from './admin/admin.module';

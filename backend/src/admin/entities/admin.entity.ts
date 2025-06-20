@@ -13,7 +13,7 @@ export class Admin {
   password: string;
 
   @Column({ type: 'varchar', length: 150, nullable: false, unique: true })
-  email: string; // Para recuperación o notificaciones al admin
+  email: string;
 
   @CreateDateColumn({ type: 'timestamp with time zone', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

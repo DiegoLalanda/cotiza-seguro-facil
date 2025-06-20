@@ -3,10 +3,6 @@ export interface Vehiculo {
   marca: string;
   modelo: string;
   tieneGNC: boolean;
-
-  // --- CAMBIO CLAVE AQUÍ ---
-  // La propiedad que viene del backend se llama 'anioFabricacion'.
-  // Cambiamos 'anio' por 'anioFabricacion' para que coincida.
   anioFabricacion: number; 
 }
 
@@ -19,13 +15,13 @@ export interface Cliente {
   codigoPostal: string;
   dni: string;
   createdAt: string;
-  vehiculos: Vehiculo[]; // Esto ya debería estar correcto.
+  vehiculos: Vehiculo[];
 }
 
 export interface CreateLeadDto {
   vehiculo: {
     marca: string;
-    anioFabricacion: number; // Esto ya estaba correcto para enviar datos.
+    anioFabricacion: number;
     modelo: string;
     tieneGNC: boolean;
   };

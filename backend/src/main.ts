@@ -10,8 +10,8 @@ async function bootstrap() {
 
   // CORS
   app.enableCors({
-    origin: ['http://localhost:4200', 'https://cotiza-seguro-facil-frontend.onrender.com'], // Añade la URL de tu frontend en Render
-    credentials: true, // Importante para que las cookies se envíen
+    origin: ['http://localhost:4200', 'https://cotiza-seguro-facil-frontend.onrender.com'],
+    credentials: true,
   });
 
 
@@ -27,11 +27,10 @@ async function bootstrap() {
     }),
   );
 
-  // Prefijo global para la API (opcional)
-  // app.setGlobalPrefix('api/v1');
+  //Port and Host Configuration
   const host = '0.0.0.0';
-   const port = process.env.PORT || configService.get<number>('app.port') || 3000;
-  await app.listen(port,host);
+  const port = process.env.PORT || configService.get<number>('app.port') || 3000;
+  await app.listen(port, host);
   console.log(`Application is running on: http://${host}:${port}`);
 }
 bootstrap();

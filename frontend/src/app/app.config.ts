@@ -12,7 +12,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     // Proveer HttpClient con el interceptor de JWT
     provideHttpClient(withInterceptors([jwtInterceptor])),
-    // Importar los íconos que usaremos
+    // Importar los íconos
     importProvidersFrom(LucideAngularModule.pick({
       Home, Car, User, Mail, Phone, Lock, LogOut, ChevronLeft, ChevronRight, Filter, Search, Calendar, ShieldCheck, UserCog, Linkedin,Instagram,ExternalLink
     }))

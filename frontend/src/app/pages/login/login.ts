@@ -2,8 +2,6 @@ import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-
-// --- CAMBIO 1: La importación ---
 import { NgxSonnerToaster, toast } from 'ngx-sonner';
 import { LucideAngularModule } from 'lucide-angular';
 import { finalize } from 'rxjs';
@@ -12,12 +10,10 @@ import { AuthService } from '../../core/services/auth';
 @Component({
   selector: 'app-login',
   standalone: true,
-  // --- CAMBIO 2: El array de imports ---
   imports: [CommonModule, FormsModule, RouterLink, NgxSonnerToaster, LucideAngularModule],
   templateUrl: './login.html',
 })
 export class LoginComponent {
-  // ... el resto del código del componente no cambia ...
   credentials = { username: '', password: '' };
   isLoading = signal(false);
 

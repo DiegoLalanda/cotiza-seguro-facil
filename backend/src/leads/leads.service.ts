@@ -1,5 +1,3 @@
-// backend/src/leads/leads.service.ts
-
 import { Injectable, ConflictException, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
@@ -26,13 +24,11 @@ export class LeadsService {
     await queryRunner.connect();
     await queryRunner.startTransaction();
 
-    // CAMBIO: Declaramos 'cliente' como tipo 'Cliente | null' y lo inicializamos.
     let cliente: Cliente | null = null;
     let savedVehiculo: Vehiculo;
 
     try {
       // 1. Buscar si el cliente ya existe por su email.
-      // La asignación ahora es correcta porque la variable puede ser null.
       cliente = await queryRunner.manager.findOne(Cliente, {
         where: { email: clienteData.email },
       });
@@ -59,7 +55,6 @@ export class LeadsService {
 
       await queryRunner.commitTransaction();
       
-      // La llamada a sendLeadNotification ahora es correcta.
       if (cliente && savedVehiculo) {
          await this.emailService.sendLeadNotification(cliente, savedVehiculo);
       } else {

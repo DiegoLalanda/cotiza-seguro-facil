@@ -1,10 +1,8 @@
-// backend/src/shared/email/email.service.ts
-
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as nodemailer from 'nodemailer';
 import { Cliente } from '../../leads/entities/cliente.entity';
-import { Vehiculo } from 'src/leads/entities/vehiculo.entity'; // CAMBIO: Importamos la entidad Vehiculo
+import { Vehiculo } from 'src/leads/entities/vehiculo.entity';
 
 @Injectable()
 export class EmailService {
@@ -21,8 +19,7 @@ export class EmailService {
       },
     });
   }
-
-  // CAMBIO: La función ahora acepta dos argumentos: el cliente y el vehículo específico de este lead.
+  
   async sendLeadNotification(cliente: Cliente, vehiculo: Vehiculo) {
     const adminEmail = this.configService.get<string>('app.adminNotificationEmail');
     const emailFrom = this.configService.get<string>('app.emailFrom');
@@ -52,7 +49,6 @@ export class EmailService {
       console.log('Notificación de lead enviada a:', adminEmail);
     } catch (error) {
       console.error('Error enviando email:', error);
-      // Opcional: podrías lanzar una excepción aquí para que el servicio que llama sepa que falló.
     }
   }
 }

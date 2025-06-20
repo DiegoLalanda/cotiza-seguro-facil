@@ -4,7 +4,7 @@ import { QueryLeadsDto } from './dto/query-leads.dto';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 
 @Controller('admin/leads')
-@UseGuards(JwtAuthGuard) // Proteger todas las rutas de este controlador
+@UseGuards(JwtAuthGuard)
 export class AdminController {
   constructor(private readonly adminLeadsService: AdminLeadsService) {}
 

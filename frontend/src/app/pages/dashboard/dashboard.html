@@ -86,7 +86,6 @@
                                 <div class="text-xs text-gray-500">Tel: {{ cliente.telefono }}</div>
                             </td>
 
-                            <!-- --- CAMBIO CLAVE AQUÍ --- -->
                             <!-- Verificamos si hay vehículos y mostramos el primero o el último -->
                             @if (cliente.vehiculos && cliente.vehiculos.length > 0) {
                             <td class="px-6 py-4">
@@ -109,7 +108,7 @@
                                 }
                             </td>
                             } @else {
-                            <!-- Caso en que un cliente no tenga vehículos (no debería pasar con tu lógica actual) -->
+                            <!-- Caso en que un cliente no tenga vehículos -->
                             <td colspan="2" class="px-6 py-4 text-xs text-gray-400">Sin vehículo asociado</td>
                             }
                         </tr>

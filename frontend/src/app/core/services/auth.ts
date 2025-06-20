@@ -11,7 +11,7 @@ export class AuthService {
   private apiUrl = `${environment.apiUrl}/admin/auth`;
   private readonly TOKEN_KEY = 'authToken';
   
-  // --- CAMBIO 1: Declara la señal sin inicializarla aquí ---
+  //Usamos una señal para manejar el estado de autenticación
   public isAuthenticated = signal<boolean>(false);
 
   constructor(
@@ -19,8 +19,8 @@ export class AuthService {
     private router: Router, 
     private cookieService: CookieService
   ) {
-    // --- CAMBIO 2: Inicializa la señal DENTRO del constructor ---
-    // En este punto, this.cookieService ya ha sido inyectado y existe.
+    //Inicializa la señal DENTRO del constructor
+    //En este punto, this.cookieService ya ha sido inyectado y existe.
     this.isAuthenticated.set(this.cookieService.check(this.TOKEN_KEY));
   }
 
@@ -44,7 +44,6 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    // Usamos .get() que devuelve una cadena vacía si no la encuentra, por eso el || null.
     const token = this.cookieService.get(this.TOKEN_KEY);
     return token ? token : null;
   }

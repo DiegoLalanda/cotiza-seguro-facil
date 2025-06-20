@@ -2,7 +2,6 @@ import { Component, signal } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CreateLeadDto } from '../../core/models/lead.model';
-
 import { NgxSonnerToaster, toast } from 'ngx-sonner';
 import { LucideAngularModule } from 'lucide-angular';
 import { finalize } from 'rxjs';
@@ -19,11 +18,9 @@ export class QuoteFormComponent {
   isLoading = signal<boolean>(false);
   public readonly currentYear = new Date().getFullYear();
 
-  // Cambia el tipo de initialState para que TypeScript te ayude
   private readonly initialState = {
     vehiculo: {
       marca: '',
-      // Mantenemos 'anio' para el ngModel del formulario
       anio: this.currentYear,
       modelo: '',
       tieneGNC: false
@@ -59,7 +56,6 @@ export class QuoteFormComponent {
 
     this.isLoading.set(true);
 
-    // --- CAMBIO CLAVE AQUÍ ---
     // Creamos el objeto DTO con la estructura correcta ANTES de enviarlo.
     const leadData: CreateLeadDto = {
       cliente: this.formData.cliente,
@@ -67,7 +63,6 @@ export class QuoteFormComponent {
         marca: this.formData.vehiculo.marca,
         modelo: this.formData.vehiculo.modelo,
         tieneGNC: this.formData.vehiculo.tieneGNC,
-        // Mapeamos 'anio' del formulario a 'anioFabricacion' para el DTO
         anioFabricacion: this.formData.vehiculo.anio
       }
     };
@@ -89,7 +84,6 @@ export class QuoteFormComponent {
     });
   }
 
-  // No necesitas cambiar el resetForm
   private resetForm(form: NgForm): void {
     this.formData = JSON.parse(JSON.stringify(this.initialState));
     form.resetForm(this.formData);

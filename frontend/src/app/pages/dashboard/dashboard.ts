@@ -1,10 +1,8 @@
 import { Component, OnInit, signal, computed, effect } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { LeadsResponse } from '../../core/models/lead.model';
 import { LucideAngularModule } from 'lucide-angular';
-// --- CAMBIO 1: La importación ---
 import { NgxSonnerToaster, toast } from 'ngx-sonner';
 import { AdminService, LeadFilters } from '../../core/services/admin';
 import { AuthService } from '../../core/services/auth';
@@ -12,7 +10,6 @@ import { AuthService } from '../../core/services/auth';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  // --- CAMBIO 2: El array de imports ---
   imports: [CommonModule, FormsModule, LucideAngularModule, NgxSonnerToaster, DatePipe],
   templateUrl: './dashboard.html',
 })

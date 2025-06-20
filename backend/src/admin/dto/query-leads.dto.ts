@@ -20,13 +20,13 @@ export class QueryLeadsDto {
 
   @IsOptional()
   @IsString()
-  nombreCliente?: string; // Para buscar por nombre o apellido
+  nombreCliente?: string;
 
   @IsOptional()
   @IsDateString()
-  fechaDesde?: string; // Formato YYYY-MM-DD
+  fechaDesde?: string;
 
   @IsOptional()
   @IsDateString()
-  fechaHasta?: string; // Formato YYYY-MM-DD
+  fechaHasta?: string;
 }

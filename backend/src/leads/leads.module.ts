@@ -10,6 +10,6 @@ import { EmailModule } from '../shared/email/email.module';
   imports: [TypeOrmModule.forFeature([Vehiculo, Cliente]), EmailModule],
   controllers: [LeadsController],
   providers: [LeadsService],
-  exports: [LeadsService, TypeOrmModule] // Exportar TypeOrmModule si otros módulos lo necesitan
+  exports: [LeadsService, TypeOrmModule]
 })
 export class LeadsModule {}

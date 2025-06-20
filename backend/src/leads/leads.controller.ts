@@ -1,5 +1,3 @@
-// backend/src/leads/leads.controller.ts
-
 import { Controller, Post, Body, ValidationPipe, UsePipes } from '@nestjs/common';
 import { LeadsService } from './leads.service';
 import { CreateLeadDto } from './dto/create-lead.dto';

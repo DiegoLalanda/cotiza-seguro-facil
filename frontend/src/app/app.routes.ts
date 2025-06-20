@@ -18,7 +18,6 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/login/login').then(c => c.LoginComponent),
         title: 'Admin Login'
       },
-      // El dashboard NO irá dentro del layout público
     ]
   },
   {

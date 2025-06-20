@@ -26,14 +26,6 @@ export class Cliente {
   @Column({ type: 'varchar', length: 20, nullable: false, unique: true })
   dni: string;
 
-  // CAMBIO: Eliminamos la columna vehiculoId y la relación OneToOne.
-  // @Column({ type: 'uuid' })
-  // vehiculoId: string;
-  // @OneToOne(() => Vehiculo, { onDelete: 'CASCADE', eager: true })
-  // @JoinColumn({ name: 'vehiculoId' })
-  // vehiculo: Vehiculo;
-
-  // CAMBIO: Agregamos una relación OneToMany. Un cliente puede tener muchos vehículos (leads).
   @OneToMany(() => Vehiculo, vehiculo => vehiculo.cliente, { cascade: true })
   vehiculos: Vehiculo[];
 

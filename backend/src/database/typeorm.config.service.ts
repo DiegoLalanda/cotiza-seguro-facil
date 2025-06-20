@@ -1,4 +1,3 @@
-// backend/src/database/typeorm.config.service.ts
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
@@ -19,7 +18,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
     const port = this.configService.get<number>('app.dbPort');
     const username = this.configService.get<string>('app.dbUsername');
     const password = this.configService.get<string>('app.dbPassword');
-    const database = this.configService.get<string>('app.dbName'); // Nombre de la BD
+    const database = this.configService.get<string>('app.dbName');
 
     // Validar que todas las variables necesarias estén presentes
     if (!host || !port || !username || password === undefined || !database) {
@@ -39,12 +38,11 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       port: port,
       username: username,
       password: password,
-      database: database, // Nombre de la base de datos
+      database: database,
       entities: [Vehiculo, Cliente, Admin],
-      synchronize: true,
+      synchronize: !isProduction, // No sincronizar en producción
       ssl: isProduction ? { rejectUnauthorized: false } : false,
       logging: !isProduction,
-      // logger: !isProduction ? 'advanced-console' : undefined, // Opcional
     };
   }
 }

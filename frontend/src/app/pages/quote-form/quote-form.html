@@ -1,13 +1,9 @@
 <main class="min-h-screen bg-[#f0f7f8] flex items-center justify-center p-4 animate-fade-in-up">
-    <!-- Usamos una animación personalizada simple. Para esto, añade a tu CSS global:
-      @keyframes fade-in-up { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
-      .animate-fade-in-up { animation: fade-in-up 0.6s ease-in-out; }
-    -->
     <div class="w-full max-w-2xl bg-white p-8 rounded-2xl shadow-xl shadow-blue-900/10 border border-gray-200/80">
         <h1 class="text-3xl font-bold text-[#0B4F8C] text-center mb-2">Cotizá tu Seguro</h1>
         <p class="text-center text-gray-600 mb-8">Completá los datos y te contactaremos a la brevedad.</p>
 
-        <!-- Indicador de Pasos Mejorado -->
+        <!-- Indicador de Pasos -->
         <div class="flex justify-center items-center mb-8">
             <div class="flex items-center transition-colors duration-500"
                 [ngClass]="{'font-bold text-[#0B4F8C]': step() === 1}">
@@ -30,7 +26,7 @@
 
             <!-- PASO 1: Con animación de entrada -->
             @if (step() === 1) {
-            <div class="space-y-6 animate-fade-in"> <!-- Animación de entrada -->
+            <div class="space-y-6 animate-fade-in">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label for="marca" class="block text-sm font-medium text-gray-700 mb-1">Marca</label>
@@ -80,7 +76,7 @@
 
             <!-- PASO 2: Con animación de entrada -->
             @if (step() === 2) {
-            <div class="space-y-6 animate-fade-in"> <!-- Animación de entrada -->
+            <div class="space-y-6 animate-fade-in">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
