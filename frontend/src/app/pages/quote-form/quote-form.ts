@@ -2,7 +2,7 @@ import { Component, signal } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CreateLeadDto } from '../../core/models/lead.model';
-import { NgxSonnerToaster, toast } from 'ngx-sonner';
+import { toast } from 'ngx-sonner';
 import { LucideAngularModule } from 'lucide-angular';
 import { finalize } from 'rxjs';
 import { LeadsService } from '../../core/services/leads';
@@ -16,6 +16,10 @@ import { LeadsService } from '../../core/services/leads';
 export class QuoteFormComponent {
   step = signal<number>(1);
   isLoading = signal<boolean>(false);
+  progress = signal<number>(0); // <-- NUEVA SEÑAL PARA EL PROGRESO
+  showSuccessModal = signal<boolean>(false); // <-- SEÑAL PARA CONTROLAR EL MODAL
+  private progressInterval: any;
+
   public readonly currentYear = new Date().getFullYear();
 
   private readonly initialState = {
@@ -55,6 +59,7 @@ export class QuoteFormComponent {
     }
 
     this.isLoading.set(true);
+    this.startProgressSimulation(); // <-- INICIAMOS LA SIMULACIÓN
 
     // Creamos el objeto DTO con la estructura correcta ANTES de enviarlo.
     const leadData: CreateLeadDto = {
@@ -69,17 +74,20 @@ export class QuoteFormComponent {
 
     // Enviamos el objeto DTO formateado correctamente
     this.leadsService.createLead(leadData).pipe(
-      finalize(() => this.isLoading.set(false))
+      finalize(() => {
+        this.isLoading.set(false);
+        this.completeProgress(); // <-- COMPLETAMOS Y LIMPIAMOS LA SIMULACIÓN
+      })
     ).subscribe({
       next: (response) => {
-        toast.success('¡Solicitud enviada! Nos pondremos en contacto pronto.');
+        toast.success('¡Solicitud enviada!');
+        this.showSuccessModal.set(true); // <-- MOSTRAMOS EL MODAL
         this.resetForm(form);
       },
       error: (err) => {
-        // El error de ngx-sonner debería desaparecer ahora
         const errorMessage = err.error?.message || 'Ocurrió un error inesperado.';
         toast.error(errorMessage);
-        console.error('Backend Error:', err); // Buena práctica dejar un log del error completo
+        console.error('Backend Error:', err);
       }
     });
   }
@@ -88,5 +96,32 @@ export class QuoteFormComponent {
     this.formData = JSON.parse(JSON.stringify(this.initialState));
     form.resetForm(this.formData);
     this.step.set(1);
+  }
+
+  closeModalAndReset(form: NgForm): void {
+    this.showSuccessModal.set(false);
+    this.resetForm(form);
+  }
+
+  // --- MÉTODOS PARA LA BARRA DE PROGRESO ---
+
+  private startProgressSimulation(): void {
+    this.progress.set(0);
+    this.progressInterval = setInterval(() => {
+      this.progress.update(p => {
+        if (p >= 95) { // Simula que se queda "casi" al final esperando la respuesta
+          clearInterval(this.progressInterval);
+          return 95;
+        }
+        return p + 5; // Incrementa el progreso
+      });
+    }, 200); // Se actualiza cada 200ms
+  }
+
+  private completeProgress(): void {
+    clearInterval(this.progressInterval);
+    this.progress.set(100);
+    // Opcional: esconder la barra después de un momento
+    setTimeout(() => this.progress.set(0), 500);
   }
 }
